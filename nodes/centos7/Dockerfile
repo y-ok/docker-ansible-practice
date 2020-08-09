@@ -40,10 +40,6 @@ RUN chown root:root -R /root/.ssh \
     && echo -e "\n\
     alias ls='ls -GF'\n\
     alias ll='ls -GFlrt'\n\
-    " >> /root/.bashrc \
-    && echo -e "\n\
-    alias ls='ls -GF'\n\
-    alias ll='ls -GFlrt'\n\
     " >> /home/$WORKUSER/.bashrc
 
 EXPOSE 22

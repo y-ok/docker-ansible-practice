@@ -3,16 +3,16 @@
 - controller
   - config ･･･ ansibleの設定ファイル関連
   - ssh ･･･ ゲスト環境にアクセスするためのsshキー
-- nodes ･･･ ゲスト環境のDockerfile
-- playbooks ･･･ playbookの保存
-
+- nodes
+  - centos7 ･･･ ゲスト環境のDockerfile
+- playbooks ･･･ controllerから実行するplaybookの保存
 
 # コンテナの構成
 
 - centos7 ･･･ ゲスト環境
-- ansible-controller ･･･ ansible実行環境
+- controller ･･･ ansible実行環境
 
-`ansible-controller`コンテナでansibleコマンドを実行し、各ゲスト環境を更新する
+`controller`コンテナでansibleコマンドを実行し、各ゲスト環境を更新する
 
 # 起動方法
 
@@ -24,7 +24,7 @@
 # ansible環境を利用する
 
 ```
-> docker exec -it ansible-controller /bin/bash
+> docker exec -it controller /bin/bash
 ```
 
 # 疎通確認
