@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  # node 1
+  # target node
   centos7:
     build:
       context: ./nodes/centos7
@@ -8,24 +8,16 @@ services:
     image: ansible-centos7
     container_name: ansible-centos7
     hostname: centos7
-  # node 2
-  ubuntu20:
-    build:
-      context: ./nodes/ubuntu20
-      dockerfile: Dockerfile
-    image: ansible-ubuntu20
-    container_name: ansible-ubuntu20
-    hostname: ubuntu20
-    working_dir: /home/work_user
+    working_dir: /home/ansible
   # ansible実行環境
-  myansible:
+  ansible-controller:
     build:
-      context: .
+      context: ./controller
       dockerfile: Dockerfile
-    image: myansible
-    container_name: myansible
-    hostname: myansible
+    image: ansible
+    container_name: ansible-controller
+    hostname: ansible
     tty: true
     volumes:
-      - ./playbooks:/myansible
-    working_dir: /myansible
+      - ./playbooks:/workspace
+    working_dir: /workspace

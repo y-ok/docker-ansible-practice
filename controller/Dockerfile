@@ -1,7 +1,7 @@
-FROM python:3.7-slim-stretch
+FROM python:3.8.5-slim-buster
 
 # install ssh, ansible
-RUN apt-get update && apt-get install -y ssh vim
+RUN apt-get update && apt-get install -y ssh vim git
 
 WORKDIR /tmp
 
@@ -10,7 +10,7 @@ WORKDIR /tmp
 COPY ./requirements.txt /tmp/
 RUN if [ -f "requirements.txt" ]; then pip install -r requirements.txt && rm requirements.txt*; fi \
     # make work dir
-    && mkdir /myansible
+    && mkdir /workspace
 
 # add ansible hosts
 ADD ./config/ansible_hosts /etc/ansible/hosts

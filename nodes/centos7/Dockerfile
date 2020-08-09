@@ -1,13 +1,13 @@
-FROM centos:7
+FROM centos:7.7.1908
 
 # Variable for work user
-ARG WORKUSER=work_user
+ARG WORKUSER=ansible
 ARG USER_UID=1001
 ARG USER_GID=$USER_UID
 
 # Install ssh server, sudo vim
 RUN yum update -y \
-    && yum install -y openssh-server sudo vim\
+    && yum install -y openssh-server sudo vim \
     && yum clean all
 
 # change root password
@@ -36,7 +36,15 @@ RUN chown root:root -R /root/.ssh \
     && sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config \
     && sed -ri 's/^PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config \
     && sed -ri 's/HostKey/#HostKey/' /etc/ssh/sshd_config \
-    && ssh-keygen -t rsa -b 4096 -N "" -f /etc/ssh/ssh_host_rsa_key
+    && ssh-keygen -t rsa -b 4096 -N "" -f /etc/ssh/ssh_host_rsa_key \
+    && echo -e "\n\
+    alias ls='ls -GF'\n\
+    alias ll='ls -GFlrt'\n\
+    " >> /root/.bashrc \
+    && echo -e "\n\
+    alias ls='ls -GF'\n\
+    alias ll='ls -GFlrt'\n\
+    " >> /home/$WORKUSER/.bashrc
 
 EXPOSE 22
 
