@@ -1,6 +1,6 @@
 FROM centos:7.7.1908
 
-# Variable for work user
+# Variable for ansible user
 ARG WORKUSER=ansible
 ARG USER_UID=1001
 ARG USER_GID=$USER_UID
@@ -12,10 +12,10 @@ RUN yum update -y \
 
 # change root password
 RUN echo 'root:p@ssw0rd' | chpasswd \
-    # Add group & user for work user
+    # Add group & user for ansible user
     && groupadd --gid $USER_GID $WORKUSER \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $WORKUSER \
-    # Set sudo for work user
+    # Set sudo for ansible user
     && echo $WORKUSER ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$WORKUSER \
     && chmod 0440 /etc/sudoers.d/$WORKUSER
 
@@ -23,7 +23,7 @@ RUN echo 'root:p@ssw0rd' | chpasswd \
 COPY ./ansible_rsa.pub /root/.ssh/authorized_keys
 COPY ./ansible_rsa.pub /home/$WORKUSER/.ssh/authorized_keys
 
-# Setup work user permission
+# Setup ansible user permission
 RUN chown root:root -R /root/.ssh \
     && chown $WORKUSER:$WORKUSER -R /home/$WORKUSER/.ssh \
     && chmod 500 /root/.ssh \

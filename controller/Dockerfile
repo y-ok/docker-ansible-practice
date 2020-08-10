@@ -23,3 +23,9 @@ ADD ./ssh/ansible_rsa /root/.ssh/
 ADD ./ssh/ansible_rsa.pub /root/.ssh/
 RUN chmod 600 /root/.ssh
 RUN chmod 400 /root/.ssh/*
+
+# setup /root/.bashrc
+RUN sed -i "s/^# export LS_OPTIONS='--color=auto'/export LS_OPTIONS='--color=auto'/" /root/.bashrc \
+    && sed -i "s/^# alias ls='ls \$LS_OPTIONS'/alias ls='ls \$LS_OPTIONS -GF'/" /root/.bashrc \
+    && sed -i "s/^# alias ll='ls \$LS_OPTIONS -l'/alias ll='ls \$LS_OPTIONS -GFlrt'/" /root/.bashrc \
+    && sed -i "s/^# alias l='ls \$LS_OPTIONS -lA'/alias l='ls \$LS_OPTIONS -GFAlrt'/" /root/.bashrc

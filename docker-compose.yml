@@ -5,6 +5,8 @@ services:
     build:
       context: ./nodes/centos7
       dockerfile: Dockerfile
+    privileged: true
+    command: /sbin/init
     image: centos7
     container_name: centos7
     hostname: centos7
